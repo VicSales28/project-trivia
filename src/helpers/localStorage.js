@@ -1,10 +1,9 @@
 export const saveToken = (token) => {
-  console.log(token);
-  localStorage.setItem('token', JSON.stringify(token));
+  localStorage.setItem('token', token);
 };
 
 export const getToken = () => {
-  const token = JSON.parse(localStorage.getItem('token'));
+  const token = localStorage.getItem('token');
   return token;
 };
 
