@@ -1,5 +1,6 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { saveToken } from '../helpers/localStorage';
 import logo from '../trivia.png';
 
 export default class Login extends Component {
@@ -11,9 +12,6 @@ export default class Login extends Component {
 
   verifyState = () => {
     const { name, email } = this.state;
-    // if (name.length > 0 && email.length > 0) {
-    //   this.setState({ isDisabled: false });
-    // }
     this.setState({
       isDisabled: !((name.length > 0 && email.length > 0)),
     });
@@ -23,6 +21,13 @@ export default class Login extends Component {
     this.setState(() => ({
       [name]: value,
     }), this.verifyState);
+  };
+
+  handleClick = async () => {
+    const { history } = this.props;
+    const token = await (await fetch('https://opentdb.com/api_token.php?command=request')).json();
+    saveToken(token.token);
+    history.push('/game');
   };
 
   render() {
@@ -49,15 +54,20 @@ export default class Login extends Component {
           />
 
           <button
+            onClick={ this.handleClick }
             data-testid="btn-play"
             disabled={ isDisabled }
           >
             Play
-
           </button>
-
         </header>
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+}.isRequired;
