@@ -13,6 +13,7 @@ class Game extends Component {
     questionIndex: 0,
     countdown: 30,
     isDisabled: false,
+    nextHidden: true,
   };
 
   async componentDidMount() {
@@ -43,16 +44,33 @@ class Game extends Component {
     }, THIRTY_SECONDS);
   }
 
+  showNextButton = () => {
+    this.setState({
+      nextHidden: false,
+    });
+  };
+
   render() {
-    const { questionIndex, questions: { results }, countdown, isDisabled } = this.state;
+    const { questionIndex, questions: { results }, nextHidden, countdown, isDisabled } = this.state;
     return (
       <div>
         <h1>Responda</h1>
         <h3>{ countdown }</h3>
-        {results && <QuestionCard
-          questions={ results[questionIndex] }
-          isDisabled={ isDisabled }
-        />}
+        {results && (
+          <QuestionCard
+            questions={ results[questionIndex] }
+            showNextButton={ this.showNextButton }
+            isDisabled={ isDisabled }
+          />)}
+        {!nextHidden && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ this.showNextButton }
+            hidden={ nextHidden }
+          >
+            Next
+          </button>) }
       </div>
     );
   }
