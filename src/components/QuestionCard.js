@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../styles/QuestionCard.css';
 
 class QuestionCard extends Component {
   state = {
     answers: [],
+    rightAnswerClass: '',
+    wrongAnswerClass: '',
   };
 
   componentDidMount() {
@@ -20,22 +23,31 @@ class QuestionCard extends Component {
     });
   }
 
+  answerButton = () => {
+    this.setState({
+      rightAnswerClass: 'rightAnswer',
+      wrongAnswerClass: 'wrongAnswer',
+    });
+  };
+
   render() {
-    const { answers } = this.state;
+    const { answers, rightAnswerClass, wrongAnswerClass } = this.state;
     const { questions } = this.props;
     let wrongIndex = 0;
     return (
       <div>
         <h3 data-testid="question-category">{ questions.category }</h3>
         <h2 data-testid="question-text">{ questions.question }</h2>
-        {/* {answers.map((answer, i) => <button key={ i } type="button">{answer}</button>)} */}
         <div data-testid="answer-options">
           {answers.reduce((acc, curr, i) => {
             if (curr === questions.correct_answer) {
               acc.push(
                 <button
                   type="button"
+                  className={ rightAnswerClass }
+                  onClick={ this.answerButton }
                   key={ i }
+                  value="correct-answer"
                   data-testid="correct-answer"
                 >
                   {curr}
@@ -45,7 +57,10 @@ class QuestionCard extends Component {
               acc.push(
                 <button
                   type="button"
+                  className={ wrongAnswerClass }
+                  onClick={ this.answerButton }
                   key={ i }
+                  value={ `wrong-answer-${wrongIndex}` }
                   data-testid={ `wrong-answer-${wrongIndex}` }
                 >
                   {curr}
