@@ -10,10 +10,13 @@ const THIRTY_SECONDS = 30000;
 class Game extends Component {
   state = {
     questions: [''],
+    answers: [],
     questionIndex: 0,
     countdown: 30,
     isDisabled: false,
     nextHidden: true,
+    rightAnswerClass: '',
+    wrongAnswerClass: '',
   };
 
   async componentDidMount() {
@@ -27,7 +30,7 @@ class Game extends Component {
     } else {
       this.setState({
         questions,
-      });
+      }, this.sortingQuestions);
     }
 
     const timer = setInterval(() => {
@@ -44,15 +47,45 @@ class Game extends Component {
     }, THIRTY_SECONDS);
   }
 
-  showNextButton = () => {
+  sortingQuestions = () => {
+    const { questions: { results }, questionIndex } = this.state;
+    const answers = [
+      ...results[questionIndex].incorrect_answers, results[questionIndex].correct_answer];
+
+    for (let i = answers.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [answers[i], answers[j]] = [answers[j], answers[i]];
+    }
+
     this.setState({
+      answers,
+    });
+  };
+
+  answerButton = () => {
+    this.setState({
+      rightAnswerClass: 'rightAnswer',
+      wrongAnswerClass: 'wrongAnswer',
       nextHidden: false,
     });
+  };
+
+  nextQuestion = () => {
+    this.setState((state) => ({
+      questionIndex: state.questionIndex + 1,
+      nextHidden: true,
+      rightAnswerClass: '',
+      wrongAnswerClass: '',
+      countdown: 30,
+    }), this.sortingQuestions);
   };
 
   render() {
     const { questionIndex,
       questions: { results },
+      answers,
+      rightAnswerClass,
+      wrongAnswerClass,
       nextHidden,
       countdown,
       isDisabled } = this.state;
@@ -65,13 +98,16 @@ class Game extends Component {
             questions={ results[questionIndex] }
             showNextButton={ this.showNextButton }
             isDisabled={ isDisabled }
+            answers={ answers }
+            rightAnswer={ rightAnswerClass }
+            wrongAnswer={ wrongAnswerClass }
+            answerButton={ this.answerButton }
           />)}
         {!nextHidden && (
           <button
             type="button"
             data-testid="btn-next"
-            onClick={ this.showNextButton }
-            hidden={ nextHidden }
+            onClick={ this.nextQuestion }
           >
             Next
           </button>) }
