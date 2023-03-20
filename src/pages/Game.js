@@ -8,6 +8,7 @@ class Game extends Component {
   state = {
     questions: [''],
     questionIndex: 0,
+    nextHidden: true,
   };
 
   async componentDidMount() {
@@ -25,12 +26,31 @@ class Game extends Component {
     }
   }
 
+  showNextButton = () => {
+    this.setState({
+      nextHidden: false,
+    });
+  };
+
   render() {
-    const { questionIndex, questions: { results } } = this.state;
+    const { questionIndex, questions: { results }, nextHidden } = this.state;
     return (
       <div>
         <h1>Responda</h1>
-        {results && <QuestionCard questions={ results[questionIndex] } />}
+        {results && (
+          <QuestionCard
+            questions={ results[questionIndex] }
+            showNextButton={ this.showNextButton }
+          />)}
+        {!nextHidden && (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ this.showNextButton }
+            hidden={ nextHidden }
+          >
+            Next
+          </button>) }
       </div>
     );
   }

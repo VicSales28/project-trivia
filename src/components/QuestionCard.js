@@ -24,10 +24,13 @@ class QuestionCard extends Component {
   }
 
   answerButton = () => {
+    const { showNextButton } = this.props;
+
     this.setState({
       rightAnswerClass: 'rightAnswer',
       wrongAnswerClass: 'wrongAnswer',
     });
+    showNextButton();
   };
 
   render() {
