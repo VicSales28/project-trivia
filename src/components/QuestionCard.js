@@ -35,7 +35,7 @@ class QuestionCard extends Component {
 
   render() {
     const { answers, rightAnswerClass, wrongAnswerClass } = this.state;
-    const { questions } = this.props;
+    const { questions, isDisabled } = this.props;
     let wrongIndex = 0;
     return (
       <div>
@@ -52,6 +52,7 @@ class QuestionCard extends Component {
                   key={ i }
                   value="correct-answer"
                   data-testid="correct-answer"
+                  disabled={ isDisabled }
                 >
                   {curr}
                 </button>,
@@ -65,6 +66,7 @@ class QuestionCard extends Component {
                   key={ i }
                   value={ `wrong-answer-${wrongIndex}` }
                   data-testid={ `wrong-answer-${wrongIndex}` }
+                  disabled={ isDisabled }
                 >
                   {curr}
                 </button>,
@@ -81,6 +83,7 @@ class QuestionCard extends Component {
 
 QuestionCard.propTypes = {
   questions: PropTypes.object,
+  isDisabled: PropTypes.bool,
 }.isRequired;
 
 export default QuestionCard;

@@ -4,10 +4,15 @@ import QuestionCard from '../components/QuestionCard';
 
 import { getToken, saveProfile } from '../helpers/localStorage';
 
+const ONE_SECOND = 1000;
+const THIRTY_SECONDS = 30000;
+
 class Game extends Component {
   state = {
     questions: [''],
     questionIndex: 0,
+    countdown: 30,
+    isDisabled: false,
     nextHidden: true,
   };
 
@@ -24,6 +29,19 @@ class Game extends Component {
         questions,
       });
     }
+
+    const timer = setInterval(() => {
+      this.setState((prevState) => ({
+        countdown: prevState.countdown - 1,
+      }));
+    }, ONE_SECOND);
+
+    setTimeout(() => {
+      clearInterval(timer);
+      this.setState({
+        isDisabled: true,
+      });
+    }, THIRTY_SECONDS);
   }
 
   showNextButton = () => {
@@ -33,14 +51,20 @@ class Game extends Component {
   };
 
   render() {
-    const { questionIndex, questions: { results }, nextHidden } = this.state;
+    const { questionIndex,
+      questions: { results },
+      nextHidden,
+      countdown,
+      isDisabled } = this.state;
     return (
       <div>
         <h1>Responda</h1>
+        <h3>{ countdown }</h3>
         {results && (
           <QuestionCard
             questions={ results[questionIndex] }
             showNextButton={ this.showNextButton }
+            isDisabled={ isDisabled }
           />)}
         {!nextHidden && (
           <button
