@@ -6,14 +6,19 @@ import { getToken, saveProfile } from '../helpers/localStorage';
 
 const ONE_SECOND = 1000;
 const THIRTY_SECONDS = 30000;
+let timeout = null;
+let timer = null;
 
 class Game extends Component {
   state = {
     questions: [''],
+    answers: [],
     questionIndex: 0,
     countdown: 30,
     isDisabled: false,
     nextHidden: true,
+    rightAnswerClass: '',
+    wrongAnswerClass: '',
   };
 
   async componentDidMount() {
@@ -27,16 +32,16 @@ class Game extends Component {
     } else {
       this.setState({
         questions,
-      });
+      }, this.sortingQuestions);
     }
 
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
       this.setState((prevState) => ({
         countdown: prevState.countdown - 1,
       }));
     }, ONE_SECOND);
 
-    setTimeout(() => {
+    timeout = setTimeout(() => {
       clearInterval(timer);
       this.setState({
         isDisabled: true,
@@ -44,15 +49,56 @@ class Game extends Component {
     }, THIRTY_SECONDS);
   }
 
-  showNextButton = () => {
+  sortingQuestions = () => {
+    const { questions: { results }, questionIndex } = this.state;
+    const answers = [
+      ...results[questionIndex].incorrect_answers, results[questionIndex].correct_answer];
+
+    for (let i = answers.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [answers[i], answers[j]] = [answers[j], answers[i]];
+    }
+
     this.setState({
+      answers,
+    });
+  };
+
+  answerButton = () => {
+    this.setState({
+      rightAnswerClass: 'rightAnswer',
+      wrongAnswerClass: 'wrongAnswer',
       nextHidden: false,
     });
+  };
+
+  nextQuestion = () => {
+    const { history } = this.props;
+    const { questionIndex, answers } = this.state;
+    if (questionIndex >= answers.length) history.push('/feedback');
+
+    this.setState((state) => ({
+      questionIndex: state.questionIndex + 1,
+      nextHidden: true,
+      rightAnswerClass: '',
+      wrongAnswerClass: '',
+      countdown: 30,
+    }), this.sortingQuestions);
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      clearInterval(timer);
+      this.setState({
+        isDisabled: true,
+      });
+    }, THIRTY_SECONDS);
   };
 
   render() {
     const { questionIndex,
       questions: { results },
+      answers,
+      rightAnswerClass,
+      wrongAnswerClass,
       nextHidden,
       countdown,
       isDisabled } = this.state;
@@ -65,13 +111,16 @@ class Game extends Component {
             questions={ results[questionIndex] }
             showNextButton={ this.showNextButton }
             isDisabled={ isDisabled }
+            answers={ answers }
+            rightAnswer={ rightAnswerClass }
+            wrongAnswer={ wrongAnswerClass }
+            answerButton={ this.answerButton }
           />)}
         {!nextHidden && (
           <button
             type="button"
             data-testid="btn-next"
-            onClick={ this.showNextButton }
-            hidden={ nextHidden }
+            onClick={ this.nextQuestion }
           >
             Next
           </button>) }
