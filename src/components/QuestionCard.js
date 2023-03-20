@@ -3,21 +3,6 @@ import PropTypes from 'prop-types';
 import '../styles/QuestionCard.css';
 
 class QuestionCard extends Component {
-  // state = {
-  //   rightAnswerClass: '',
-  //   wrongAnswerClass: '',
-  // };
-
-  // answerButton = () => {
-  //   const { showNextButton } = this.props;
-
-  //   this.setState({
-  //     rightAnswerClass: 'rightAnswer',
-  //     wrongAnswerClass: 'wrongAnswer',
-  //   });
-  //   showNextButton();
-  // };
-
   render() {
     const { questions, isDisabled, answers, rightAnswer,
       wrongAnswer, answerButton } = this.props;

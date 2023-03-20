@@ -6,6 +6,8 @@ import { getToken, saveProfile } from '../helpers/localStorage';
 
 const ONE_SECOND = 1000;
 const THIRTY_SECONDS = 30000;
+let timeout = null;
+let timer = null;
 
 class Game extends Component {
   state = {
@@ -33,13 +35,13 @@ class Game extends Component {
       }, this.sortingQuestions);
     }
 
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
       this.setState((prevState) => ({
         countdown: prevState.countdown - 1,
       }));
     }, ONE_SECOND);
 
-    setTimeout(() => {
+    timeout = setTimeout(() => {
       clearInterval(timer);
       this.setState({
         isDisabled: true,
@@ -71,6 +73,10 @@ class Game extends Component {
   };
 
   nextQuestion = () => {
+    const { history } = this.props;
+    const { questionIndex, answers } = this.state;
+    if (questionIndex >= answers.length) history.push('/feedback');
+
     this.setState((state) => ({
       questionIndex: state.questionIndex + 1,
       nextHidden: true,
@@ -78,6 +84,13 @@ class Game extends Component {
       wrongAnswerClass: '',
       countdown: 30,
     }), this.sortingQuestions);
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      clearInterval(timer);
+      this.setState({
+        isDisabled: true,
+      });
+    }, THIRTY_SECONDS);
   };
 
   render() {
