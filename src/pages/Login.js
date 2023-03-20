@@ -32,7 +32,7 @@ export default class Login extends Component {
 
   render() {
     const { name, email, isDisabled } = this.state;
-
+    const { history } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -59,6 +59,14 @@ export default class Login extends Component {
             disabled={ isDisabled }
           >
             Play
+          </button>
+
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ () => history.push('/settings') }
+          >
+            Configurações
           </button>
         </header>
       </div>
