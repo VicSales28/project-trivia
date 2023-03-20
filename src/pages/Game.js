@@ -51,7 +51,11 @@ class Game extends Component {
   };
 
   render() {
-    const { questionIndex, questions: { results }, nextHidden, countdown, isDisabled } = this.state;
+    const { questionIndex,
+      questions: { results },
+      nextHidden,
+      countdown,
+      isDisabled } = this.state;
     return (
       <div>
         <h1>Responda</h1>
