@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   name: '',
   assertions: '',
-  score: '',
+  score: 0,
   gravatarEmail: '',
 };
 
@@ -16,6 +16,12 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       assertions: state.assertions + action.hit,
+    };
+  case 'SAVE_PROFILE':
+    return {
+      ...state,
+      name: action.name,
+      gravatarEmail: action.email,
     };
   default:
     return state;

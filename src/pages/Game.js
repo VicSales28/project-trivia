@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import QuestionCard from '../components/QuestionCard';
+import Header from '../components/Header';
 
 import { getToken, saveProfile } from '../helpers/localStorage';
 import { assertionPlayer, scorePlayer } from '../redux/actions/index';
@@ -137,6 +138,7 @@ class Game extends Component {
       isDisabled } = this.state;
     return (
       <div>
+        <Header />
         <h1>Responda</h1>
         <h3>{ countdown }</h3>
         {results && (
