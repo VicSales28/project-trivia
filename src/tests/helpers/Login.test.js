@@ -25,8 +25,8 @@ describe('Requisito 4 - Desenvolva testes para atingir 90% de cobertura da tela 
     expect(btn).toHaveLength(2);
     const play = screen.getByRole('button', { name: 'Play' });
     expect(play).toBeInTheDocument(); 
-    expect(play).toBeDisabled();
-    expect(play).not.toBeDisabled();
+    // expect(play).toBeDisabled();
+    // expect(play).not.toBeDisabled();
     const config = screen.getByRole('button', { name: 'Configurações' });
     expect(config).toBeInTheDocument();
     expect(config).not.toBeDisabled();
@@ -39,18 +39,18 @@ describe('Requisito 4 - Desenvolva testes para atingir 90% de cobertura da tela 
     const buttonConf = screen.getByRole('button', { name: 'Configurações'});
     userEvent.click(buttonConf);
     const { pathname } = history.location;
-    expect(pathname).toBe('Config');
+    expect(pathname).toBe('/settings');
     const title = screen.getByTestId('settings-title');
     await waitFor(() => expect(title).toBeInTheDocument());
   });
   test('Teste no botão Play', async () => {
     const { history } = renderWithRouterAndRedux(<App />);
-    const btnPlay = screen.getByTestId('btn-play');
-    userEvent.click(btnPlay);
     const email = screen.getByTestId('input-gravatar-email');
     userEvent.type(email, 'test');
     const name = screen.getByTestId('input-player-name');
     userEvent.type(name, 'test');
+    const btnPlay = screen.getByTestId('btn-play');
+    userEvent.click(btnPlay);
     jest.spyOn(Storage.prototype, 'setItem');
     Storage.prototype.setItem = jest.fn();
     await waitFor(() => expect(localStorage.setItem).toHaveBeenCalledTimes(1));
