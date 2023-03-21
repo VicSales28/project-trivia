@@ -44,6 +44,7 @@ export default class Login extends Component {
             name="name"
             value={ name }
             type="text"
+            placeholder="Digite seu nome"
           />
           <input
             onChange={ this.handleChange }
@@ -51,6 +52,7 @@ export default class Login extends Component {
             name="email"
             value={ email }
             type="email"
+            placeholder="Digite seu email"
           />
 
           <button
