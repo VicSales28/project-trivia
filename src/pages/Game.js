@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import QuestionCard from '../components/QuestionCard';
 
 import { getToken, saveProfile } from '../helpers/localStorage';
+import { assertionPlayer, scorePlayer } from '../redux/actions/index';
 
 const ONE_SECOND = 1000;
 const THIRTY_SECONDS = 30000;
@@ -64,12 +66,43 @@ class Game extends Component {
     });
   };
 
-  answerButton = () => {
+  handleAnswersBtns = () => {
     this.setState({
       rightAnswerClass: 'rightAnswer',
       wrongAnswerClass: 'wrongAnswer',
       nextHidden: false,
     });
+  };
+
+  handleSelectAnswer = ({ target }) => {
+    const {
+      questionIndex,
+      questions: { results },
+    } = this.state;
+    const { dispatch } = this.props;
+    const { correct_answer: correctAnswer } = results[questionIndex];
+
+    clearInterval(timer);
+    this.handleAnswersBtns();
+
+    const answer = target.innerText;
+    if (answer === correctAnswer) { dispatch(assertionPlayer(1)); }
+    return (answer === correctAnswer)
+      ? dispatch(scorePlayer(this.getScore()))
+      : dispatch(scorePlayer(0));
+  };
+
+  getScore = () => {
+    const { questionIndex, questions: { results }, countdown } = this.state;
+    let multiplier = 1;
+    const hardMultiplier = 3;
+    const mediumMultiplier = 2;
+    const basePoints = 10;
+
+    if (results[questionIndex].difficulty === 'hard') multiplier = hardMultiplier;
+    if (results[questionIndex].difficulty === 'medium') multiplier = mediumMultiplier;
+
+    return (basePoints + (countdown * multiplier));
   };
 
   nextQuestion = () => {
@@ -114,7 +147,7 @@ class Game extends Component {
             answers={ answers }
             rightAnswer={ rightAnswerClass }
             wrongAnswer={ wrongAnswerClass }
-            answerButton={ this.answerButton }
+            answerButton={ (event) => this.handleSelectAnswer(event) }
           />)}
         {!nextHidden && (
           <button
@@ -130,9 +163,10 @@ class Game extends Component {
 }
 
 Game.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 }.isRequired;
 
-export default Game;
+export default connect(null)(Game);
