@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { resetProfile } from '../redux/actions';
 
 class Ranking extends Component {
+  handleClick = () => {
+    const { history, dispatch } = this.props;
+
+    dispatch(resetProfile());
+    history.push('/');
+  };
+
   render() {
-    const { history } = this.props;
     return (
       <div>
         <h1 data-testid="ranking-title">Ranking</h1>
         <button
           data-testid="btn-go-home"
-          onClick={ () => history.push('/') }
+          onClick={ this.handleClick }
         >
           Página Inicial
         </button>
@@ -19,9 +27,10 @@ class Ranking extends Component {
 }
 
 Ranking.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
 
-export default Ranking;
+export default connect(null)(Ranking);
