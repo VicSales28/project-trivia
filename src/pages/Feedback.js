@@ -13,14 +13,18 @@ class Feedback extends Component {
   };
 
   render() {
-    const { history, assertions } = this.props;
+    const { history, assertions, score } = this.props;
     return (
       <div>
         <Header />
+        <section>
+          <div data-testid="feedback-total-score">{Number(score)}</div>
+          <div data-testid="feedback-total-question">{Number(assertions)}</div>
+        </section>
         <div
           data-testid="feedback-text"
         >
-          {assertions.length > 2 ? 'Well Done!' : 'Could be better...' }
+          {assertions > 2 ? 'Well Done!' : 'Could be better...' }
         </div>
         <button
           data-testid="btn-play-again"
@@ -41,11 +45,13 @@ class Feedback extends Component {
 
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
+  score: state.player.score,
 });
 
 Feedback.propTypes = {
   dispatch: PropTypes.func.isRequired,
   assertions: PropTypes.string.isRequired,
+  score: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
