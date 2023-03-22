@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { resetProfile } from '../redux/actions';
 
 class Ranking extends Component {
   handleClick = () => {
