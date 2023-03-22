@@ -36,40 +36,61 @@ describe('Desenvolva testes para atingir 90% de cobertura da tela de Jogo', () =
 
 
     for (let i = 0; i < 5; i++) {
-      const correctButton = screen.getByTestId('correct-answer');
-      const wrongButton = screen.getByTestId(`wrong-answer-0`);
-      
       if (i % 2 === 0) {
+        const correctButton = screen.getByTestId('correct-answer');
         userEvent.click(correctButton);
         const nextButton = screen.getByRole('button', { name: 'Next'})
         userEvent.click(nextButton);
       } else {
+        const wrongButton = screen.getByTestId(`wrong-answer-0`);
         userEvent.click(wrongButton);
         const nextButton = screen.getByRole('button', { name: 'Next'})
         userEvent.click(nextButton);
       }
     }
-
-    //Fazer expect de path quando o feedback existir
-
+    const feedbackText = screen.getByTestId('feedback-text');
+    expect(feedbackText).toBeInTheDocument();
   })
-  it.skip('Testa se depois de 30 segundos os botões ficam desabilitados', async () => {
-    
-    renderWithRouterAndRedux(<App />)
-    
+  it('Testa se o cabeçalho existe', async () => {
+    renderWithRouterAndRedux(<App/>)
+
     const nameInput = screen.getByTestId('input-player-name');
     const emailInput = screen.getByTestId('input-gravatar-email');
     userEvent.type(nameInput, 'Cassandra');
     userEvent.type(emailInput, 'cassandra@email.com');
     const playButton = screen.getByRole('button', { name: 'Play'});
     userEvent.click(playButton);
+
+    await waitFor(() => screen.getByText('30'));
+
+    const headerImage = screen.getByTestId('header-profile-picture');
+    const headerName = screen.getByTestId('header-player-name');
+    const headerScore = screen.getByTestId('header-score');
     
-    await waitFor(() => screen.findByTestId('question-category'));
-    
-    const correctButton = screen.getByTestId('correct-answer');
-    
-    jest.useFakeTimers();
-    jest.advanceTimersByTime(31000);
-    expect(correctButton).toBeDisabled();
+    expect(headerImage).toBeVisible();
+    expect(headerName).toBeVisible();
+    expect(headerScore).toBeVisible();
   })
 });
+
+// describe('Teste de timeOut', () => {
+//   jest.useFakeTimers();
+//   it('Testa se depois de 30 segundos os botões ficam desabilitados', async () => {
+    
+//     renderWithRouterAndRedux(<App />)
+    
+//     const nameInput = screen.getByTestId('input-player-name');
+//     const emailInput = screen.getByTestId('input-gravatar-email');
+//     userEvent.type(nameInput, 'Cassandra');
+//     userEvent.type(emailInput, 'cassandra@email.com');
+//     const playButton = screen.getByRole('button', { name: 'Play'});
+//     userEvent.click(playButton);
+    
+//     await waitFor(() => screen.findByTestId('question-category'));
+    
+//     const correctButton = screen.getByTestId('correct-answer');
+    
+//     jest.advanceTimersByTime(31000);
+//     expect(correctButton).toBeDisabled();
+//   })
+// });
