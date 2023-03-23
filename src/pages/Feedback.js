@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { resetProfile } from '../redux/actions';
 
 class Feedback extends Component {
+  componentDidMount() {
+    this.saveRanking();
+  }
+
+  saveRanking = () => {
+    const { name, score, gravatarEmail } = this.props;
+    const playerHash = md5(gravatarEmail).toString();
+    const image = `https://www.gravatar.com/avatar/${playerHash}`;
+    const newPerformance = { image, name, score };
+    const rankingList = JSON.parse(localStorage.getItem('ranking')) || [];
+    const newRankingList = JSON.stringify([...rankingList, newPerformance]);
+    localStorage.setItem('ranking', newRankingList);
+  };
+
   handleClick = () => {
     const { history, dispatch } = this.props;
 
@@ -45,10 +60,15 @@ class Feedback extends Component {
 
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
+  name: state.player.name,
   score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
 });
 
 Feedback.propTypes = {
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
