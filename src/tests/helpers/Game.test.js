@@ -4,9 +4,8 @@ import { screen, act, waitFor, configure } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-// configure({ asyncUtilTimeout: 5000 } );
+configure({ asyncUtilTimeout: 5000 } );
 
-jest.setTimeout();
 describe('Desenvolva testes para atingir 90% de cobertura da tela de Jogo', () => {
   it('Testa se indo para a rota "/game" sem login o usuário é redirecionado para efetuar o login', async () => {
     const { history } = renderWithRouterAndRedux(<App />)

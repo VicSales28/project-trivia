@@ -71,7 +71,6 @@ Feedback.propTypes = {
   gravatarEmail: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   assertions: PropTypes.number.isRequired,
-  score: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
