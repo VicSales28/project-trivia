@@ -50,8 +50,8 @@ const mapStateToProps = (state) => ({
 
 Feedback.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  assertions: PropTypes.string.isRequired,
-  score: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

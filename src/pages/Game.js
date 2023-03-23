@@ -82,6 +82,7 @@ class Game extends Component {
     } = this.state;
     const { dispatch } = this.props;
     const { correct_answer: correctAnswer } = results[questionIndex];
+    const actualScore = this.getScore();
 
     clearInterval(timer);
     this.handleAnswersBtns();
@@ -89,7 +90,7 @@ class Game extends Component {
     const answer = target.innerText;
     if (answer === correctAnswer) { dispatch(assertionPlayer(1)); }
     return (answer === correctAnswer)
-      ? dispatch(scorePlayer(this.getScore()))
+      ? dispatch(scorePlayer(actualScore))
       : dispatch(scorePlayer(0));
   };
 
@@ -140,7 +141,7 @@ class Game extends Component {
       <div>
         <Header />
         <h1>Responda</h1>
-        <h3>{ countdown }</h3>
+        <h3 data-testid="countdown">{ countdown }</h3>
         {results && (
           <QuestionCard
             questions={ results[questionIndex] }
