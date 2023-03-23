@@ -70,7 +70,7 @@ Feedback.propTypes = {
   score: PropTypes.number.isRequired,
   gravatarEmail: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
-  assertions: PropTypes.string.isRequired,
+  assertions: PropTypes.number.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

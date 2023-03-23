@@ -34,17 +34,16 @@ describe('Desenvolva testes para atingir 90% de cobertura da tela de Jogo', () =
     const { pathname } = history.location;
     expect(pathname).toBe('/game')
 
-
     for (let i = 0; i < 5; i++) {
       if (i % 2 === 0) {
-        const correctButton = screen.getByTestId('correct-answer');
+        const correctButton = await screen.findByTestId('correct-answer');
         userEvent.click(correctButton);
-        const nextButton = screen.getByRole('button', { name: 'Next'})
+        const nextButton = await screen.findByRole('button', { name: 'Next'})
         userEvent.click(nextButton);
-      } else {
-        const wrongButton = screen.getByTestId(`wrong-answer-0`);
+      } else if (i % 2 !== 0) {
+        const wrongButton = await screen.findByTestId('wrong-answer-0');
         userEvent.click(wrongButton);
-        const nextButton = screen.getByRole('button', { name: 'Next'})
+        const nextButton = await screen.findByRole('button', { name: 'Next'})
         userEvent.click(nextButton);
       }
     }
@@ -73,24 +72,3 @@ describe('Desenvolva testes para atingir 90% de cobertura da tela de Jogo', () =
   })
 });
 
-// describe('Teste de timeOut', () => {
-//   jest.useFakeTimers();
-//   it('Testa se depois de 30 segundos os botões ficam desabilitados', async () => {
-    
-//     renderWithRouterAndRedux(<App />)
-    
-//     const nameInput = screen.getByTestId('input-player-name');
-//     const emailInput = screen.getByTestId('input-gravatar-email');
-//     userEvent.type(nameInput, 'Cassandra');
-//     userEvent.type(emailInput, 'cassandra@email.com');
-//     const playButton = screen.getByRole('button', { name: 'Play'});
-//     userEvent.click(playButton);
-    
-//     await waitFor(() => screen.findByTestId('question-category'));
-    
-//     const correctButton = screen.getByTestId('correct-answer');
-    
-//     jest.advanceTimersByTime(31000);
-//     expect(correctButton).toBeDisabled();
-//   })
-// });
