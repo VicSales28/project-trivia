@@ -1,6 +1,6 @@
 # Trivia game 🙋⁉️
 
-This project was developed by the team of developers: [Victoria Sales](https://github.com/VicSales28), [Linda Inês](https://github.com/lindainesv), [Pedro Montandon](https://github.com/pedroMontandon), Josiane Oliveira, while we were studying Redux in React Applications at Trybe Programming School. 
+This project was developed by the team: [Victoria Sales](https://github.com/VicSales28), [Linda Inês](https://github.com/lindainesv), [Pedro Montandon](https://github.com/pedroMontandon), Josiane Oliveira, while we were studying Redux in React Applications at Trybe Programming School. 
 
 We have developed a quiz game based on the Trivia game. This application allows the user to:
 
