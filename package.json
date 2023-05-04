@@ -19,9 +19,7 @@
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.2",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "redux-thunk": "^2.4.2"
   },
   "scripts": {
     "cy": "env CY_CLI=true cypress run",
@@ -33,7 +31,9 @@
     "eject": "react-scripts eject",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "lint:styles": "npx stylelint '**/*.css'",
-    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx"
+    "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
