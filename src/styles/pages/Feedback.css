@@ -1,0 +1,50 @@
+.feedback-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+  justify-content: center;
+  margin: 48px auto;
+  text-align: center;
+  width: 20rem;
+}
+
+.feedback-container p {
+  color: var(--white);
+  font-size: 1.7rem;
+  font-weight: 600;
+  text-shadow: 0 0 0.375rem var(--pink);
+}
+
+.play-again-btn, .ranking-btn {
+  align-items: center;
+  background-color: transparent;
+  border-radius: 4px;
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: 16px;
+  text-shadow: 2px 2px black;
+  transition: box-shadow 0.3s ease-in-out , background-color 0.5s ease-in-out;
+}
+
+.play-again-btn {
+  border-color: var(--green);
+  box-shadow: var(--green) 0 2px 5px;
+}
+
+.play-again-btn:hover {
+  background-color: var(--green);
+  box-shadow: var(--green) 0 2px 30px;
+}
+
+.ranking-btn {
+  border-color: var(--blue);
+  box-shadow: var(--blue) 0 2px 5px;
+}
+
+.ranking-btn:hover {
+  background-color: var(--blue);
+  box-shadow: var(--blue) 0 2px 30px;
+}

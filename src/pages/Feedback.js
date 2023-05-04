@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
+
 import Header from '../components/Header';
 import { resetProfile } from '../redux/actions';
+import '../styles/pages/Feedback.css';
 
 class Feedback extends Component {
   componentDidMount() {
@@ -30,30 +32,41 @@ class Feedback extends Component {
   render() {
     const { history, assertions, score } = this.props;
     return (
-      <div>
+      <>
         <Header />
-        <section>
-          <div data-testid="feedback-total-score">{Number(score)}</div>
-          <div data-testid="feedback-total-question">{Number(assertions)}</div>
-        </section>
-        <div
-          data-testid="feedback-text"
-        >
-          {assertions > 2 ? 'Well Done!' : 'Could be better...' }
+        <div className="feedback-container">
+          <p data-testid="feedback-total-score">
+            Score:
+            {Number(score)}
+          </p>
+          <p data-testid="feedback-total-question">
+            Assertions:
+            {Number(assertions)}
+          </p>
+
+          <p
+            data-testid="feedback-text"
+          >
+            {assertions > 2 ? 'Well Done!' : 'Could be better...' }
+          </p>
+          <div className="btns-container">
+            <button
+              data-testid="btn-play-again"
+              className="play-again-btn"
+              onClick={ this.handleClick }
+            >
+              Play Again
+            </button>
+            <button
+              data-testid="btn-ranking"
+              className="ranking-btn"
+              onClick={ () => history.push('/ranking') }
+            >
+              Ranking
+            </button>
+          </div>
         </div>
-        <button
-          data-testid="btn-play-again"
-          onClick={ this.handleClick }
-        >
-          Play Again
-        </button>
-        <button
-          data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
-        >
-          Ranking
-        </button>
-      </div>
+      </>
     );
   }
 }

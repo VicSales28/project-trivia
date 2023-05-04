@@ -1,0 +1,41 @@
+header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 75rem;
+  padding: 2rem;
+}
+
+.header-player {
+  display: flex;
+  gap: 2rem;
+}
+
+.player-data {
+  padding-top: 0.7rem;
+}
+
+header h1 {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.12rem;
+  padding: 0.2rem;
+}
+
+.score {
+  background-color: transparent;
+  font-weight: 700;
+  text-shadow: 0 0 6px var(--green);
+}
+
+.name {
+  text-shadow: 0 0 6px var(--pink);
+}
+
+.img-gravatar {
+  border-radius: 50px;
+  filter: drop-shadow(0 0 15px var(--blue));
+  width: 4.5rem;
+}

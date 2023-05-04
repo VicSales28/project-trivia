@@ -1,6 +1,7 @@
 {
   "name": "trivia-react-redux",
   "version": "0.1.0",
+  "homepage": "https://vicsales28.github.io/project-trivia",
   "private": true,
   "engines": {
     "node": "16 || 18"
@@ -10,6 +11,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^13.5.0",
     "crypto-js": "^4.1.1",
+    "gh-pages": "^5.0.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -17,7 +19,9 @@
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
-    "redux-thunk": "^2.4.2"
+    "redux-thunk": "^2.4.2",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "scripts": {
     "cy": "env CY_CLI=true cypress run",

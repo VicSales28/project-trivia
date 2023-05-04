@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../styles/QuestionCard.css';
+
+import '../styles/components/QuestionCard.css';
 
 class QuestionCard extends Component {
   render() {
@@ -8,10 +9,10 @@ class QuestionCard extends Component {
       wrongAnswer, answerButton } = this.props;
     let wrongIndex = 0;
     return (
-      <div>
+      <div className="question-card-container">
         <h3 data-testid="question-category">{ questions.category }</h3>
         <h2 data-testid="question-text">{ questions.question }</h2>
-        <div data-testid="answer-options">
+        <div data-testid="answer-options" className="answer-options">
           {answers.reduce((acc, curr, i) => {
             if (curr === questions.correct_answer) {
               acc.push(

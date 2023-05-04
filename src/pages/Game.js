@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import QuestionCard from '../components/QuestionCard';
-import Header from '../components/Header';
 
+import Header from '../components/Header';
+import QuestionCard from '../components/QuestionCard';
 import { getToken, saveProfile } from '../helpers/localStorage';
 import { assertionPlayer, scorePlayer } from '../redux/actions/index';
+import '../styles/pages/Game.css';
 
 const ONE_SECOND = 1000;
 const THIRTY_SECONDS = 30000;
@@ -110,7 +111,23 @@ class Game extends Component {
   nextQuestion = () => {
     const { history } = this.props;
     const { questionIndex, answers } = this.state;
-    if (questionIndex >= answers.length) history.push('/feedback');
+    if (questionIndex >= answers.length) {
+      history.push('/feedback');
+      return;
+    }
+
+    timer = setInterval(() => {
+      this.setState((prevState) => ({
+        countdown: prevState.countdown - 1,
+      }));
+    }, ONE_SECOND);
+    timeout = setTimeout(() => {
+      clearInterval(timer);
+      this.setState({
+        isDisabled: true,
+      });
+    }, THIRTY_SECONDS);
+    clearTimeout(timeout);
 
     this.setState((state) => ({
       questionIndex: state.questionIndex + 1,
@@ -119,13 +136,6 @@ class Game extends Component {
       wrongAnswerClass: '',
       countdown: 30,
     }), this.sortingQuestions);
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      clearInterval(timer);
-      this.setState({
-        isDisabled: true,
-      });
-    }, THIRTY_SECONDS);
   };
 
   render() {
@@ -140,26 +150,28 @@ class Game extends Component {
     return (
       <div>
         <Header />
-        <h1>Responda</h1>
-        <h3 data-testid="countdown">{ countdown }</h3>
-        {results && (
-          <QuestionCard
-            questions={ results[questionIndex] }
-            showNextButton={ this.showNextButton }
-            isDisabled={ isDisabled }
-            answers={ answers }
-            rightAnswer={ rightAnswerClass }
-            wrongAnswer={ wrongAnswerClass }
-            answerButton={ (event) => this.handleSelectAnswer(event) }
-          />)}
-        {!nextHidden && (
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ this.nextQuestion }
-          >
-            Next
-          </button>) }
+        <div className="game-container">
+          <h3 data-testid="countdown" className="timer">{ countdown }</h3>
+          {results && (
+            <QuestionCard
+              questions={ results[questionIndex] }
+              showNextButton={ this.showNextButton }
+              isDisabled={ isDisabled }
+              answers={ answers }
+              rightAnswer={ rightAnswerClass }
+              wrongAnswer={ wrongAnswerClass }
+              answerButton={ (event) => this.handleSelectAnswer(event) }
+            />)}
+          {!nextHidden && (
+            <button
+              type="button"
+              data-testid="btn-next"
+              className="next-btn"
+              onClick={ this.nextQuestion }
+            >
+              Next
+            </button>) }
+        </div>
       </div>
     );
   }

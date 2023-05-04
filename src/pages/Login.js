@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
 import { saveToken } from '../helpers/localStorage';
-import logo from '../trivia.png';
 import { saveProfileGlobal } from '../redux/actions';
+import triviaMaster from '../styles/images/trivia-master.png';
+import '../styles/pages/Login.css';
 
 class Login extends Component {
   state = {
@@ -38,17 +40,17 @@ class Login extends Component {
     const { name, email, isDisabled } = this.state;
     const { history } = this.props;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
-          <p>SUA VEZ</p>
+      <div className="login-container">
+        <main>
+          <img src={ triviaMaster } className="App-logo" alt="Trivia Master" />
+          <h1>Login</h1>
           <input
             onChange={ this.handleChange }
             data-testid="input-player-name"
             name="name"
             value={ name }
             type="text"
-            placeholder="Digite seu nome"
+            placeholder="Type your username"
           />
           <input
             onChange={ this.handleChange }
@@ -56,25 +58,28 @@ class Login extends Component {
             name="email"
             value={ email }
             type="email"
-            placeholder="Digite seu email"
+            placeholder="Type your e-mail"
           />
 
-          <button
-            onClick={ this.handleClick }
-            data-testid="btn-play"
-            disabled={ isDisabled }
-          >
-            Play
-          </button>
+          <div className="btns-container">
+            <button
+              onClick={ this.handleClick }
+              data-testid="btn-play"
+              disabled={ isDisabled }
+              className="play-btn"
+            >
+              Play
+            </button>
+            <button
+              type="button"
+              onClick={ () => history.push('/ranking') }
+              className="settings-btn"
+            >
+              Ranking
+            </button>
+          </div>
 
-          <button
-            type="button"
-            data-testid="btn-settings"
-            onClick={ () => history.push('/settings') }
-          >
-            Configurações
-          </button>
-        </header>
+        </main>
       </div>
     );
   }
@@ -86,4 +91,5 @@ Login.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
 }.isRequired;
+
 export default connect(null)(Login);

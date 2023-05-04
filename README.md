@@ -1,4 +1,4 @@
-# Trivia game 🙋⁉️
+# Trivia Master 🔠
 
 This project was developed by the team: [Victoria Sales](https://github.com/VicSales28), [Linda Inês](https://github.com/lindainesv), [Pedro Montandon](https://github.com/pedroMontandon), [Camila Gonçalves](https://github.com/CamilGon), Josiane Oliveira, while we were studying Redux in React Applications at Trybe Programming School. 
 
