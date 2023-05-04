@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/project-trivia/static/css/main.0930571c.css",
+    "main.js": "/project-trivia/static/js/main.1df23224.js",
+    "static/media/trivia-master.png": "/project-trivia/static/media/trivia-master.68ec97499b6603de968f.png",
+    "index.html": "/project-trivia/index.html",
+    "main.0930571c.css.map": "/project-trivia/static/css/main.0930571c.css.map",
+    "main.1df23224.js.map": "/project-trivia/static/js/main.1df23224.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0930571c.css",
+    "static/js/main.1df23224.js"
+  ]
+}
