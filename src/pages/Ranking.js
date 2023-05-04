@@ -13,7 +13,7 @@ class Ranking extends Component {
     const { history, dispatch } = this.props;
 
     dispatch(resetProfile());
-    history.push('/');
+    history.push('/project-trivia');
   };
 
   render() {
