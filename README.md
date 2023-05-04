@@ -19,6 +19,20 @@ This project was developed using a Kanban board in Trello for task management an
 </details>
 
 <details>
+  <summary><strong>🏗 Project structure</strong></summary><br />
+  
+All files created by the team are in the folders:
+
+📁 Components
+📁 Helpers
+📁 Pages
+📁 Redux
+📁 Styles
+📁 Tests
+
+</details>
+
+<details>
   <summary><strong>🔎 Linter</strong></summary><br />
 
 To ensure code quality, the `ESLint` and `Stylelint` linters were used in this project.
@@ -63,4 +77,3 @@ _Give us feedbacks, We're open to new ideas_ 😉
 
 </details>
 
-:construction: **The README and CSS files are still in production** :construction:
